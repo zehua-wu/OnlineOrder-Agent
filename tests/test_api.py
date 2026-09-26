@@ -4,9 +4,13 @@ from app.main import create_app
 from app.models.chat import ChatResponse, MenuItemCard, SearchCardsResponse
 
 
+CUSTOMER_ID = "11111111-1111-1111-1111-111111111111"
+
+
 class FakeOrchestrator:
-    async def chat(self, *, message, session_id, authorization):
+    async def chat(self, *, message, session_id, user_id, authorization):
         assert message == "chicken"
+        assert user_id == CUSTOMER_ID
         assert authorization == "Bearer test-token"
         return ChatResponse(
             sessionId=session_id or "7adf472e-2d2e-4d72-a962-2584cd1549f9",
@@ -14,8 +18,9 @@ class FakeOrchestrator:
             toolSteps=1,
         )
 
-    async def get_search_cards(self, *, session_id, authorization, offset, limit):
+    async def get_search_cards(self, *, session_id, user_id, authorization, offset, limit):
         assert session_id == "7adf472e-2d2e-4d72-a962-2584cd1549f9"
+        assert user_id == CUSTOMER_ID
         assert authorization == "Bearer test-token"
         assert offset == 3
         assert limit == 3
@@ -40,7 +45,7 @@ class FakeBackendClient:
 
     async def get_current_user(self, *, authorization):
         assert authorization == "Bearer test-token"
-        return {"id": "customer-1", "role": self.role}
+        return {"id": CUSTOMER_ID, "role": self.role}
 
 
 def test_health() -> None:
@@ -133,3 +138,21 @@ def test_chat_rejects_non_customer_account() -> None:
         )
     assert response.status_code == 403
     assert response.json()["detail"] == "Only customer accounts can use the ordering assistant."
+
+
+def test_chat_rejects_invalid_user_identity_from_spring() -> None:
+    class InvalidIdentityBackend(FakeBackendClient):
+        async def get_current_user(self, *, authorization):
+            return {"id": "not-a-uuid", "role": "CUSTOMER"}
+
+    with TestClient(
+        create_app(orchestrator=FakeOrchestrator(), backend_client=InvalidIdentityBackend())
+    ) as client:
+        response = client.post(
+            "/agent/chat",
+            headers={"Authorization": "Bearer test-token"},
+            json={"message": "chicken"},
+        )
+
+    assert response.status_code == 503
+    assert response.json()["detail"] == "Authentication service returned an invalid user identity."

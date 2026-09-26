@@ -20,7 +20,9 @@ from app.core.exceptions import (
 )
 from app.llm.openai_responses import OpenAIResponsesModel
 from app.memory.coordinator import SessionCoordinator
+from app.memory.extractor import NoOpMemoryExtractor, OpenAIMemoryExtractor
 from app.memory.in_memory import InMemorySessionStore
+from app.memory.long_term import BackendUserMemoryStore
 from app.memory.redis_store import RedisSessionStore
 from app.tools.executor import ToolExecutor
 
@@ -67,6 +69,16 @@ def create_app(
             session_ttl_seconds=active_settings.session_ttl_seconds,
             recent_message_limit=active_settings.session_recent_message_limit,
             max_tool_steps=active_settings.agent_max_tool_steps,
+            user_memory_store=BackendUserMemoryStore(active_backend_client),
+            memory_extractor=(
+                OpenAIMemoryExtractor(
+                    api_key=active_settings.openai_api_key,
+                    model=active_settings.openai_model,
+                )
+                if active_settings.openai_api_key
+                else NoOpMemoryExtractor()
+            ),
+            long_term_memory_limit=active_settings.long_term_memory_limit,
         )
         try:
             yield

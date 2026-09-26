@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     session_backend: Literal["memory", "redis"] = "memory"
     session_ttl_seconds: int = Field(default=14_400, ge=60)
     session_recent_message_limit: int = Field(default=12, ge=2, le=100)
+    long_term_memory_limit: int = Field(default=50, ge=1, le=100)
     redis_url: str = "redis://localhost:6379/0"
 
     agent_max_tool_steps: int = Field(default=5, ge=1, le=20)

@@ -50,7 +50,9 @@ class ConversationState(BaseModel):
 
 class ConversationSession(BaseModel):
     session_id: str
-    owner_fingerprint: str
+    user_id: str | None = None
+    # Transitional support for Redis sessions created before stable user IDs.
+    owner_fingerprint: str | None = None
     messages: list[ConversationMessage] = Field(default_factory=list)
     state: ConversationState = Field(default_factory=ConversationState)
     summary: str | None = None
