@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Annotated
 from uuid import UUID
 
@@ -12,10 +13,16 @@ from app.models.chat import ChatRequest, ChatResponse, SearchCardsResponse
 router = APIRouter()
 
 
+@dataclass(frozen=True)
+class AuthenticatedCustomer:
+    user_id: str
+    authorization: str
+
+
 async def require_customer(
     request: Request,
     authorization: str | None,
-) -> str:
+) -> AuthenticatedCustomer:
     if not authorization or not authorization.startswith("Bearer ") or not authorization[7:].strip():
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -54,7 +61,15 @@ async def require_customer(
             detail="Only customer accounts can use the ordering assistant.",
         )
 
-    return authorization
+    try:
+        user_id = str(UUID(str(current_user.get("id"))))
+    except (TypeError, ValueError, AttributeError) as error:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Authentication service returned an invalid user identity.",
+        ) from error
+
+    return AuthenticatedCustomer(user_id=user_id, authorization=authorization)
 
 
 @router.get("/health", tags=["operations"])
@@ -68,12 +83,13 @@ async def chat(
     request: Request,
     authorization: Annotated[str | None, Header()] = None,
 ) -> ChatResponse:
-    customer_authorization = await require_customer(request, authorization)
+    customer = await require_customer(request, authorization)
     orchestrator: AgentOrchestrator = request.app.state.orchestrator
     return await orchestrator.chat(
         message=body.message.strip(),
         session_id=str(body.session_id) if body.session_id else None,
-        authorization=customer_authorization,
+        user_id=customer.user_id,
+        authorization=customer.authorization,
     )
 
 
@@ -89,11 +105,12 @@ async def get_search_cards(
     offset: Annotated[int, Query(ge=0)] = 0,
     limit: Annotated[int, Query(ge=1, le=10)] = 3,
 ) -> SearchCardsResponse:
-    customer_authorization = await require_customer(request, authorization)
+    customer = await require_customer(request, authorization)
     orchestrator: AgentOrchestrator = request.app.state.orchestrator
     return await orchestrator.get_search_cards(
         session_id=str(session_id),
-        authorization=customer_authorization,
+        user_id=customer.user_id,
+        authorization=customer.authorization,
         offset=offset,
         limit=limit,
     )

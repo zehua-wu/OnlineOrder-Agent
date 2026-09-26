@@ -4,6 +4,7 @@ from typing import Any
 import httpx
 
 from app.core.exceptions import BackendToolError
+from app.models.memory import LongTermMemory, MemoryMutation
 from app.models.tools import SearchFilters
 
 
@@ -54,6 +55,54 @@ class OnlineOrderBackendClient:
                 status_code=response.status_code,
             )
         return body
+
+    async def get_user_memories(
+        self,
+        *,
+        authorization: str,
+        limit: int,
+    ) -> list[LongTermMemory]:
+        response = await self._request_read(
+            "GET",
+            "/api/agent/memories",
+            params={"limit": limit},
+            headers=self._authorization_headers(authorization),
+        )
+        return self._parse_memories(response)
+
+    async def apply_user_memory_mutations(
+        self,
+        *,
+        authorization: str,
+        mutations: list[MemoryMutation],
+    ) -> list[LongTermMemory]:
+        response = await self._request_read(
+            "POST",
+            "/api/agent/memories/mutations",
+            json={
+                "mutations": [mutation.to_backend_payload() for mutation in mutations]
+            },
+            headers=self._authorization_headers(authorization),
+        )
+        return self._parse_memories(response)
+
+    @staticmethod
+    def _parse_memories(response: httpx.Response) -> list[LongTermMemory]:
+        body = response.json()
+        if not isinstance(body, list):
+            raise BackendToolError(
+                code="INVALID_BACKEND_RESPONSE",
+                message="The memory service returned an unexpected response.",
+                status_code=response.status_code,
+            )
+        try:
+            return [LongTermMemory.model_validate(item) for item in body]
+        except (TypeError, ValueError) as exc:
+            raise BackendToolError(
+                code="INVALID_BACKEND_RESPONSE",
+                message="The memory service returned invalid memory data.",
+                status_code=response.status_code,
+            ) from exc
 
     async def _request_read(self, method: str, path: str, **kwargs: Any) -> httpx.Response:
         for attempt in range(self._read_retries + 1):

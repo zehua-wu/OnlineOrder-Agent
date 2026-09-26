@@ -30,6 +30,30 @@ state.last_search_results   positions mapped to real Spring menuItemId values
 state.selected_item         the result explicitly selected by the user
 ```
 
+Each session is bound to the stable `users.id` returned by Spring's authenticated
+`GET /api/users/me` endpoint. The caller never supplies a user ID and the model
+never chooses one. Legacy Redis sessions that only contain a token fingerprint are
+upgraded after that fingerprint is verified; new sessions store `user_id` directly.
+
+Long-term user memories are stored by Spring in PostgreSQL table
+`agent_user_memories`, keyed by `(user_id, memory_key)`. Before every model turn,
+FastAPI loads the authenticated user's bounded memory list and constructs context
+in this order:
+
+```text
+system instructions
+long-term user memory
+optional session summary       # reserved; no summarizer yet
+structured working state
+recent conversation
+current user message
+```
+
+After the main agent/tool loop finishes, a separate structured-output model call
+extracts only explicit durable food preferences or restrictions. Its UPSERT/DELETE
+mutations are sent to Spring, which always derives the target user from the same
+Bearer JWT. Memory read or extraction failure is non-fatal to the ordering turn.
+
 For example, after a search for mild chicken under $15, a follow-up saying
 "also with avocado" sends only the new keyword from the model. The tool executor
 merges it with the stored chicken, spice, and price constraints before calling
@@ -57,6 +81,10 @@ If you are not using Conda, create and activate a normal `.venv` first.
 Set `OPENAI_API_KEY` in `.env`. By default, the agent calls the Spring service at
 `http://localhost:8080` and keeps sessions in process memory. To use Redis, set
 `SESSION_BACKEND=redis` and `REDIS_URL`.
+
+For the Docker-backed development setup, PostgreSQL and Redis remain owned by the
+OnlineOrder Compose stack. Flyway applies the long-term-memory table migration when
+the Spring service starts; the Agent does not connect to PostgreSQL directly.
 
 ## API
 
