@@ -3,7 +3,7 @@ from copy import deepcopy
 import pytest
 
 from app.agent.orchestrator import AgentOrchestrator
-from app.core.exceptions import AgentLoopError, SessionAccessError
+from app.core.exceptions import SessionAccessError
 from app.llm.base import ModelTurn, ToolCall
 from app.memory.coordinator import SessionCoordinator
 from app.memory.in_memory import InMemorySessionStore
@@ -11,7 +11,6 @@ from app.models.memory import LongTermMemory, MemoryMutation
 from app.models.session import ConversationSession, SearchResultReference, SelectedItem
 from app.models.tools import SearchFilters
 from app.tools.executor import ToolExecutionResult
-
 
 USER_ID = "11111111-1111-1111-1111-111111111111"
 OTHER_USER_ID = "22222222-2222-2222-2222-222222222222"
@@ -114,9 +113,7 @@ async def test_tool_call_round_trip_and_session_history() -> None:
 
     assert response.answer == "找到 Chicken Bowl。"
     assert response.tool_steps == 1
-    assert executor.calls == [
-        ("search_menu", tool_call.arguments, "Bearer token")
-    ]
+    assert executor.calls == [("search_menu", tool_call.arguments, "Bearer token")]
     assert model.inputs[1][-1] == {
         "type": "function_call_output",
         "call_id": "call-1",
@@ -142,13 +139,14 @@ async def test_repeated_identical_tool_call_is_stopped() -> None:
     executor = FakeExecutor()
     orchestrator = make_orchestrator(model, executor, InMemorySessionStore())
 
-    with pytest.raises(AgentLoopError, match="repeated"):
-        await orchestrator.chat(
-            message="ramen",
-            session_id=None,
-            user_id=USER_ID,
-            authorization=None,
-        )
+    response = await orchestrator.chat(
+        message="ramen",
+        session_id=None,
+        user_id=USER_ID,
+        authorization=None,
+    )
+    assert response.status == "degraded"
+    assert response.error_code == "AGENT_LOOP_STOPPED"
 
     assert len(executor.calls) == 1
 

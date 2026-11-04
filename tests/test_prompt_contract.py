@@ -7,7 +7,8 @@ def test_prompt_enforces_agent_backend_boundary_and_direct_search() -> None:
     assert "Spring Boot owns authentication" in SYSTEM_PROMPT
     assert "call\n  search_menu immediately" in SYSTEM_PROMPT
     assert "last_search_results" in SYSTEM_PROMPT
-    assert "Never offer to add an item to a cart" in SYSTEM_PROMPT
+    assert "You cannot confirm an action yourself" in SYSTEM_PROMPT
+    assert "WRITE_OUTCOME_UNKNOWN" in SYSTEM_PROMPT
 
 
 def test_tool_description_defines_refinement_semantics() -> None:

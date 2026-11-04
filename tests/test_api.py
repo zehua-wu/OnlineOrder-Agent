@@ -3,7 +3,6 @@ from fastapi.testclient import TestClient
 from app.main import create_app
 from app.models.chat import ChatResponse, MenuItemCard, SearchCardsResponse
 
-
 CUSTOMER_ID = "11111111-1111-1111-1111-111111111111"
 
 
@@ -49,21 +48,28 @@ class FakeBackendClient:
 
 
 def test_health() -> None:
-    with TestClient(create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient())) as client:
+    with TestClient(
+        create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient())
+    ) as client:
         response = client.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
 
 
 def test_chat_contract() -> None:
-    with TestClient(create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient())) as client:
+    with TestClient(
+        create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient())
+    ) as client:
         response = client.post(
             "/agent/chat",
             headers={"Authorization": "Bearer test-token"},
             json={"message": "chicken"},
         )
     assert response.status_code == 200
-    assert response.json() == {
+    assert {
+        k: response.json()[k]
+        for k in ("sessionId", "answer", "toolSteps", "cards", "totalResults", "hasMore")
+    } == {
         "sessionId": "7adf472e-2d2e-4d72-a962-2584cd1549f9",
         "answer": "result",
         "toolSteps": 1,
@@ -106,7 +112,9 @@ def test_search_cards_contract() -> None:
 
 
 def test_chat_rejects_invalid_session_id() -> None:
-    with TestClient(create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient())) as client:
+    with TestClient(
+        create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient())
+    ) as client:
         response = client.post(
             "/agent/chat",
             json={"message": "chicken", "sessionId": "not-a-uuid"},
@@ -115,13 +123,17 @@ def test_chat_rejects_invalid_session_id() -> None:
 
 
 def test_chat_rejects_blank_message() -> None:
-    with TestClient(create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient())) as client:
+    with TestClient(
+        create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient())
+    ) as client:
         response = client.post("/agent/chat", json={"message": "   "})
     assert response.status_code == 422
 
 
 def test_chat_requires_login() -> None:
-    with TestClient(create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient())) as client:
+    with TestClient(
+        create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient())
+    ) as client:
         response = client.post("/agent/chat", json={"message": "chicken"})
     assert response.status_code == 401
     assert response.json()["detail"] == "Customer login is required to use the ordering assistant."
@@ -129,7 +141,9 @@ def test_chat_requires_login() -> None:
 
 def test_chat_rejects_non_customer_account() -> None:
     with TestClient(
-        create_app(orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient(role="MERCHANT"))
+        create_app(
+            orchestrator=FakeOrchestrator(), backend_client=FakeBackendClient(role="MERCHANT")
+        )
     ) as client:
         response = client.post(
             "/agent/chat",

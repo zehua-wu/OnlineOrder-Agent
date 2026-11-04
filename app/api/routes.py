@@ -1,14 +1,14 @@
 from dataclasses import dataclass
-from typing import Annotated
+from typing import Annotated, Literal
 from uuid import UUID
 
 from fastapi import APIRouter, Header, HTTPException, Query, Request, status
+from pydantic import BaseModel, ConfigDict
 
 from app.agent.orchestrator import AgentOrchestrator
 from app.clients.onlineorder_backend import OnlineOrderBackendClient
 from app.core.exceptions import BackendToolError
 from app.models.chat import ChatRequest, ChatResponse, SearchCardsResponse
-
 
 router = APIRouter()
 
@@ -23,7 +23,11 @@ async def require_customer(
     request: Request,
     authorization: str | None,
 ) -> AuthenticatedCustomer:
-    if not authorization or not authorization.startswith("Bearer ") or not authorization[7:].strip():
+    if (
+        not authorization
+        or not authorization.startswith("Bearer ")
+        or not authorization[7:].strip()
+    ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Customer login is required to use the ordering assistant.",
@@ -90,6 +94,8 @@ async def chat(
         session_id=str(body.session_id) if body.session_id else None,
         user_id=customer.user_id,
         authorization=customer.authorization,
+        **({"request_id": str(body.request_id)} if body.request_id else {}),
+        **({"confirm_action_id": str(body.confirm_action_id)} if body.confirm_action_id else {}),
     )
 
 
@@ -113,4 +119,32 @@ async def get_search_cards(
         authorization=customer.authorization,
         offset=offset,
         limit=limit,
+    )
+
+
+@router.get("/agent/actions/{action_id}", tags=["agent"])
+async def get_action(
+    action_id: UUID, request: Request, authorization: Annotated[str | None, Header()] = None
+):
+    customer = await require_customer(request, authorization)
+    return await request.app.state.orchestrator.get_action(
+        user_id=customer.user_id, action_id=str(action_id)
+    )
+
+
+class AcknowledgeRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    acknowledgement: Literal["I_CHECKED_THE_CART"]
+
+
+@router.post("/agent/actions/{action_id}/acknowledge", tags=["agent"])
+async def acknowledge_action(
+    action_id: UUID,
+    body: AcknowledgeRequest,
+    request: Request,
+    authorization: Annotated[str | None, Header()] = None,
+):
+    customer = await require_customer(request, authorization)
+    return await request.app.state.orchestrator.acknowledge_action(
+        user_id=customer.user_id, action_id=str(action_id), authorization=customer.authorization
     )

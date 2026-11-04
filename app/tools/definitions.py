@@ -1,5 +1,7 @@
 from typing import Any
 
+from app.models.tools import AddToCartArgs, EmptyArgs, GetMenuArgs
+
 
 def _nullable(schema: dict[str, Any]) -> dict[str, Any]:
     return {"anyOf": [schema, {"type": "null"}]}
@@ -24,29 +26,51 @@ SEARCH_MENU_TOOL: dict[str, Any] = {
         "type": "object",
         "properties": {
             "keyword": _nullable({"type": "string", "maxLength": 100}),
-            "cuisine_type": _nullable({
-                "type": "string",
-                "enum": [
-                    "AMERICAN", "CHINESE", "MEXICAN", "ITALIAN", "JAPANESE",
-                    "KOREAN", "INDIAN", "THAI", "MEDITERRANEAN", "OTHER",
-                ],
-            }),
+            "cuisine_type": _nullable(
+                {
+                    "type": "string",
+                    "enum": [
+                        "AMERICAN",
+                        "CHINESE",
+                        "MEXICAN",
+                        "ITALIAN",
+                        "JAPANESE",
+                        "KOREAN",
+                        "INDIAN",
+                        "THAI",
+                        "MEDITERRANEAN",
+                        "OTHER",
+                    ],
+                }
+            ),
             "category": _nullable({"type": "string", "maxLength": 50}),
-            "primary_protein": _nullable({
-                "type": "string",
-                "enum": [
-                    "CHICKEN", "BEEF", "PORK", "LAMB", "FISH", "SHRIMP",
-                    "TOFU", "EGG", "NONE", "OTHER",
-                ],
-            }),
+            "primary_protein": _nullable(
+                {
+                    "type": "string",
+                    "enum": [
+                        "CHICKEN",
+                        "BEEF",
+                        "PORK",
+                        "LAMB",
+                        "FISH",
+                        "SHRIMP",
+                        "TOFU",
+                        "EGG",
+                        "NONE",
+                        "OTHER",
+                    ],
+                }
+            ),
             "max_spicy_level": _nullable({"type": "integer", "minimum": 0, "maximum": 4}),
             "max_sweetness_level": _nullable({"type": "integer", "minimum": 0, "maximum": 4}),
             "vegetarian": _nullable({"type": "boolean"}),
             "caffeinated": _nullable({"type": "boolean"}),
-            "serving_temperature": _nullable({
-                "type": "string",
-                "enum": ["HOT", "COLD", "ROOM"],
-            }),
+            "serving_temperature": _nullable(
+                {
+                    "type": "string",
+                    "enum": ["HOT", "COLD", "ROOM"],
+                }
+            ),
             "min_price": _nullable({"type": "number", "minimum": 0}),
             "max_price": _nullable({"type": "number", "minimum": 0}),
             "limit": _nullable({"type": "integer", "minimum": 1, "maximum": 100}),
@@ -65,18 +89,36 @@ SEARCH_MENU_TOOL: dict[str, Any] = {
                 "items": {
                     "type": "string",
                     "enum": [
-                        "keyword", "cuisine_type", "category", "primary_protein",
-                        "max_spicy_level", "max_sweetness_level", "vegetarian",
-                        "caffeinated", "serving_temperature", "min_price", "max_price",
+                        "keyword",
+                        "cuisine_type",
+                        "category",
+                        "primary_protein",
+                        "max_spicy_level",
+                        "max_sweetness_level",
+                        "vegetarian",
+                        "caffeinated",
+                        "serving_temperature",
+                        "min_price",
+                        "max_price",
                     ],
                 },
             },
         },
         "required": [
-            "keyword", "cuisine_type", "category", "primary_protein",
-            "max_spicy_level", "max_sweetness_level", "vegetarian", "caffeinated",
-            "serving_temperature", "min_price", "max_price", "limit",
-            "start_new_search", "clear_filters",
+            "keyword",
+            "cuisine_type",
+            "category",
+            "primary_protein",
+            "max_spicy_level",
+            "max_sweetness_level",
+            "vegetarian",
+            "caffeinated",
+            "serving_temperature",
+            "min_price",
+            "max_price",
+            "limit",
+            "start_new_search",
+            "clear_filters",
         ],
         "additionalProperties": False,
     },
@@ -110,4 +152,40 @@ SELECT_SEARCH_RESULT_TOOL: dict[str, Any] = {
 }
 
 
-AGENT_TOOLS = [SEARCH_MENU_TOOL, SELECT_SEARCH_RESULT_TOOL]
+def _tool(name, description, args):
+    return {
+        "type": "function",
+        "name": name,
+        "description": description,
+        "parameters": args.model_json_schema(),
+    }
+
+
+LIST_RESTAURANTS_TOOL = _tool(
+    "list_restaurants",
+    "List open restaurants. Use returned IDs for get_menu; never guess restaurant IDs.",
+    EmptyArgs,
+)
+GET_MENU_TOOL = _tool(
+    "get_menu",
+    "View a known restaurant's menu, including sellable and inventory snapshot fields. restaurant_id must come from saved restaurants/search results.",
+    GetMenuArgs,
+)
+GET_CART_TOOL = _tool(
+    "get_cart",
+    "Read the authenticated customer's live cart. No user ID argument exists.",
+    EmptyArgs,
+)
+ADD_TO_CART_TOOL = _tool(
+    "add_to_cart",
+    "Prepare (never execute) adding quantity units of a known result position or selected_item to the cart. The app asks for confirmation in a later user turn. Use only for an explicit add request, never merely liking/selecting an item. No guessed menu ID, price, user ID, or confirmation argument is accepted.",
+    AddToCartArgs,
+)
+AGENT_TOOLS = [
+    SEARCH_MENU_TOOL,
+    SELECT_SEARCH_RESULT_TOOL,
+    LIST_RESTAURANTS_TOOL,
+    GET_MENU_TOOL,
+    GET_CART_TOOL,
+    ADD_TO_CART_TOOL,
+]

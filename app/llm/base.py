@@ -14,6 +14,8 @@ class ModelTurn:
     text: str = ""
     tool_calls: list[ToolCall] = field(default_factory=list)
     output_items: list[Any] = field(default_factory=list)
+    input_tokens: int = 0
+    output_tokens: int = 0
 
 
 class LanguageModel(Protocol):
@@ -24,4 +26,3 @@ class LanguageModel(Protocol):
         tools: list[dict[str, Any]],
         instructions: str,
     ) -> ModelTurn: ...
-

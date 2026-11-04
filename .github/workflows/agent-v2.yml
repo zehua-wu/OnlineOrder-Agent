@@ -1,0 +1,29 @@
+name: Agent V2 checks
+on:
+  push:
+    branches: [main, feat/agent-harness-v2]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+      - run: uv sync --frozen --extra dev
+      - run: uv run ruff check app tests
+      - run: uv run ruff format --check app tests
+      - run: uv run pytest --cov=app --cov-report=term-missing --cov-fail-under=85 -q
+      - run: uv run python -m app.evaluation.run --output work/evaluation.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evaluation-python-${{ matrix.python-version }}
+          path: work/evaluation.json

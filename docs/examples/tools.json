@@ -1,0 +1,311 @@
+[
+  {
+    "type": "function",
+    "name": "search_menu",
+    "description": "Search the live Spring Boot catalog. Call this immediately for any concrete food/drink search or recommendation, even when the user supplies only one filter; unspecified filters are optional and are not a reason to ask a follow-up question. In a follow-up refinement, provide only new or changed filter values and set start_new_search=false: FastAPI will merge them with the stored search state. Set start_new_search=true only when the user explicitly abandons the prior search and starts a different one. Do not put protein words such as chicken into keyword when primary_protein already expresses that constraint.",
+    "strict": true,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cuisine_type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "AMERICAN",
+                "CHINESE",
+                "MEXICAN",
+                "ITALIAN",
+                "JAPANESE",
+                "KOREAN",
+                "INDIAN",
+                "THAI",
+                "MEDITERRANEAN",
+                "OTHER"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 50
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "primary_protein": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "CHICKEN",
+                "BEEF",
+                "PORK",
+                "LAMB",
+                "FISH",
+                "SHRIMP",
+                "TOFU",
+                "EGG",
+                "NONE",
+                "OTHER"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_spicy_level": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_sweetness_level": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vegetarian": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "caffeinated": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "serving_temperature": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "HOT",
+                "COLD",
+                "ROOM"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "min_price": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_price": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "start_new_search": {
+          "type": "boolean",
+          "description": "False for the first search and normal refinements. True only when the user explicitly starts over with a different search."
+        },
+        "clear_filters": {
+          "type": "array",
+          "description": "Stored filters the user explicitly asked to remove. Usually empty.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "keyword",
+              "cuisine_type",
+              "category",
+              "primary_protein",
+              "max_spicy_level",
+              "max_sweetness_level",
+              "vegetarian",
+              "caffeinated",
+              "serving_temperature",
+              "min_price",
+              "max_price"
+            ]
+          }
+        }
+      },
+      "required": [
+        "keyword",
+        "cuisine_type",
+        "category",
+        "primary_protein",
+        "max_spicy_level",
+        "max_sweetness_level",
+        "vegetarian",
+        "caffeinated",
+        "serving_temperature",
+        "min_price",
+        "max_price",
+        "limit",
+        "start_new_search",
+        "clear_filters"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "type": "function",
+    "name": "select_search_result",
+    "description": "Select one item from the application-managed last_search_results by its displayed position. Use this when the user expresses a choice or preference, such as 'the second one looks good' or 'choose number 3'. This only records selected_item in conversation state; it does not add anything to a cart. Do not call it when the user merely asks what an item was.",
+    "strict": true,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "One-based position from last_search_results."
+        }
+      },
+      "required": [
+        "position"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "type": "function",
+    "name": "list_restaurants",
+    "description": "List open restaurants. Use returned IDs for get_menu; never guess restaurant IDs.",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "title": "EmptyArgs",
+      "type": "object"
+    }
+  },
+  {
+    "type": "function",
+    "name": "get_menu",
+    "description": "View a known restaurant's menu, including sellable and inventory snapshot fields. restaurant_id must come from saved restaurants/search results.",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "restaurant_id": {
+          "pattern": "^[0-9a-fA-F-]{36}$",
+          "title": "Restaurant Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "restaurant_id"
+      ],
+      "title": "GetMenuArgs",
+      "type": "object"
+    }
+  },
+  {
+    "type": "function",
+    "name": "get_cart",
+    "description": "Read the authenticated customer's live cart. No user ID argument exists.",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "title": "EmptyArgs",
+      "type": "object"
+    }
+  },
+  {
+    "type": "function",
+    "name": "add_to_cart",
+    "description": "Prepare (never execute) adding quantity units of a known result position or selected_item to the cart. The app asks for confirmation in a later user turn. Use only for an explicit add request, never merely liking/selecting an item. No guessed menu ID, price, user ID, or confirmation argument is accepted.",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "position": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Position"
+        },
+        "quantity": {
+          "maximum": 99,
+          "minimum": 1,
+          "title": "Quantity",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "quantity"
+      ],
+      "title": "AddToCartArgs",
+      "type": "object"
+    }
+  }
+]
