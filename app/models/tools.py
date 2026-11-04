@@ -2,7 +2,6 @@ from typing import ClassVar, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-
 SearchFilterName = Literal[
     "keyword",
     "cuisine_type",
@@ -19,7 +18,7 @@ SearchFilterName = Literal[
 
 
 class SearchFilters(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", strict=True, allow_inf_nan=False)
 
     FILTER_FIELDS: ClassVar[tuple[str, ...]] = (
         "keyword",
@@ -37,15 +36,37 @@ class SearchFilters(BaseModel):
     )
 
     keyword: str | None = Field(default=None, max_length=100)
-    cuisine_type: Literal[
-        "AMERICAN", "CHINESE", "MEXICAN", "ITALIAN", "JAPANESE",
-        "KOREAN", "INDIAN", "THAI", "MEDITERRANEAN", "OTHER",
-    ] | None = None
+    cuisine_type: (
+        Literal[
+            "AMERICAN",
+            "CHINESE",
+            "MEXICAN",
+            "ITALIAN",
+            "JAPANESE",
+            "KOREAN",
+            "INDIAN",
+            "THAI",
+            "MEDITERRANEAN",
+            "OTHER",
+        ]
+        | None
+    ) = None
     category: str | None = Field(default=None, max_length=50)
-    primary_protein: Literal[
-        "CHICKEN", "BEEF", "PORK", "LAMB", "FISH", "SHRIMP",
-        "TOFU", "EGG", "NONE", "OTHER",
-    ] | None = None
+    primary_protein: (
+        Literal[
+            "CHICKEN",
+            "BEEF",
+            "PORK",
+            "LAMB",
+            "FISH",
+            "SHRIMP",
+            "TOFU",
+            "EGG",
+            "NONE",
+            "OTHER",
+        ]
+        | None
+    ) = None
     max_spicy_level: int | None = Field(default=None, ge=0, le=4)
     max_sweetness_level: int | None = Field(default=None, ge=0, le=4)
     vegetarian: bool | None = None
@@ -89,6 +110,20 @@ class SearchMenuArgs(SearchFilters):
 
 
 class SelectSearchResultArgs(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", strict=True, allow_inf_nan=False)
 
     position: int = Field(ge=1, le=100)
+
+
+class EmptyArgs(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+
+class GetMenuArgs(EmptyArgs):
+    restaurant_id: str = Field(pattern=r"^[0-9a-fA-F-]{36}$")
+
+
+class AddToCartArgs(EmptyArgs):
+    # Model may select a known position or the application's selected_item only.
+    position: int | None = Field(default=None, ge=1, le=100)
+    quantity: int = Field(ge=1, le=99)

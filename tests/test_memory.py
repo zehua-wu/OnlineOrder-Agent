@@ -33,9 +33,7 @@ async def test_memory_extractor_uses_separate_structured_response_without_tools(
 
     mutations = await extractor.extract(
         message="I usually prefer mild food.",
-        existing_memories=[
-            LongTermMemory(key="cuisine.preference:thai", value="Likes Thai food")
-        ],
+        existing_memories=[LongTermMemory(key="cuisine.preference:thai", value="Likes Thai food")],
     )
 
     assert mutations == parsed.mutations

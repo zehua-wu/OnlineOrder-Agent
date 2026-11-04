@@ -2,12 +2,17 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from app.models.harness import PendingAction, TurnMetrics
+
 
 class ChatRequest(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
     message: str = Field(min_length=1, max_length=4_000)
     session_id: UUID | None = Field(default=None, alias="sessionId")
+
+    request_id: UUID | None = Field(default=None, alias="requestId")
+    confirm_action_id: UUID | None = Field(default=None, alias="confirmActionId")
 
     @field_validator("message")
     @classmethod
@@ -50,6 +55,15 @@ class ChatResponse(BaseModel):
     cards: list[MenuItemCard] = Field(default_factory=list)
     total_results: int = Field(default=0, alias="totalResults", ge=0)
     has_more: bool = Field(default=False, alias="hasMore")
+
+    request_id: str | None = Field(default=None, alias="requestId")
+    trace_id: str | None = Field(default=None, alias="traceId")
+    status: str = "ok"
+    error_code: str | None = Field(default=None, alias="errorCode")
+    pending_action: PendingAction | None = Field(default=None, alias="pendingAction")
+    action_id: str | None = Field(default=None, alias="actionId")
+    cart: dict | None = None
+    metrics: TurnMetrics = Field(default_factory=TurnMetrics)
 
 
 class SearchCardsResponse(BaseModel):

@@ -3,6 +3,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from app.models.harness import PendingAction
 from app.models.tools import SearchFilters
 
 
@@ -40,16 +41,22 @@ class SelectedItem(BaseModel):
 
 
 class ConversationState(BaseModel):
-    current_task: Literal["NONE", "MENU_SEARCH"] = "NONE"
+    current_task: Literal["NONE", "MENU_SEARCH", "MENU_BROWSE", "CART"] = "NONE"
     search: SearchFilters = Field(default_factory=SearchFilters)
     last_search_results: list[SearchResultReference] = Field(default_factory=list)
     selected_item: SelectedItem | None = None
     phase: Literal["CHAT", "AWAITING_CONFIRMATION", "CHECKOUT_PROCESSING", "DONE"] = "CHAT"
-    pending_action: dict[str, object] | None = None
+    pending_action: PendingAction | None = None
+    cart: dict[str, object] | None = None
+    last_restaurants: list[dict[str, object]] = Field(default_factory=list)
+    results_updated_at: datetime | None = None
 
 
 class ConversationSession(BaseModel):
+    schema_version: int = 2
     session_id: str
+    revision: int = 0
+    turn_count: int = 0
     user_id: str | None = None
     # Transitional support for Redis sessions created before stable user IDs.
     owner_fingerprint: str | None = None

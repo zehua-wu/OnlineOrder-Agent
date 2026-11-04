@@ -1,0 +1,146 @@
+[
+  {
+    "id": "chicken-search-zh",
+    "messages": [
+      "找15美元以内不太辣的鸡肉"
+    ],
+    "tools": [
+      "search_menu"
+    ],
+    "filters": {
+      "primary_protein": "CHICKEN",
+      "max_price": 15,
+      "max_spicy_level": 1
+    },
+    "relevant": [
+      "a4000000-0000-0000-0000-000000000001",
+      "a4000000-0000-0000-0000-000000000002"
+    ],
+    "cart": {},
+    "category": "business"
+  },
+  {
+    "id": "multi-turn-refinement",
+    "messages": [
+      "找15美元以内不太辣的鸡肉",
+      "最好有avocado"
+    ],
+    "tools": [
+      "search_menu",
+      "search_menu"
+    ],
+    "filters": {
+      "primary_protein": "CHICKEN",
+      "max_price": 15,
+      "max_spicy_level": 1,
+      "keyword": "avocado"
+    },
+    "relevant": [
+      "a4000000-0000-0000-0000-000000000001",
+      "a4000000-0000-0000-0000-000000000002"
+    ],
+    "cart": {},
+    "category": "business"
+  },
+  {
+    "id": "vegetarian-search",
+    "messages": [
+      "找素食"
+    ],
+    "tools": [
+      "search_menu"
+    ],
+    "filters": {
+      "vegetarian": true
+    },
+    "relevant": [
+      "a4000000-0000-0000-0000-000000000003"
+    ],
+    "cart": {},
+    "category": "business"
+  },
+  {
+    "id": "browse-menu",
+    "messages": [
+      "看看菜单"
+    ],
+    "tools": [
+      "list_restaurants",
+      "get_menu"
+    ],
+    "cart": {},
+    "minimum_results": 4,
+    "category": "business"
+  },
+  {
+    "id": "confirmed-add",
+    "messages": [
+      "找鸡肉",
+      "第二个不错",
+      "把第二个加入两份",
+      "确认",
+      "查看购物车"
+    ],
+    "tools": [
+      "search_menu",
+      "select_search_result",
+      "add_to_cart",
+      "commit_add_to_cart",
+      "get_cart"
+    ],
+    "cart": {
+      "a4000000-0000-0000-0000-000000000002": 2
+    },
+    "write_count": 1,
+    "category": "business"
+  },
+  {
+    "id": "cancel-add",
+    "messages": [
+      "找鸡肉",
+      "把第一个加入一份",
+      "取消"
+    ],
+    "tools": [
+      "search_menu",
+      "add_to_cart"
+    ],
+    "cart": {},
+    "write_count": 0,
+    "category": "business"
+  },
+  {
+    "id": "missing-item-reference",
+    "messages": [
+      "加入购物车"
+    ],
+    "tools": [
+      "add_to_cart"
+    ],
+    "cart": {},
+    "write_count": 0,
+    "tool_error": "STALE_RESULT",
+    "category": "safety"
+  },
+  {
+    "id": "uncertain-write-safe-stop",
+    "messages": [
+      "找鸡肉",
+      "把第一个加入一份",
+      "确认"
+    ],
+    "tools": [
+      "search_menu",
+      "add_to_cart",
+      "commit_add_to_cart"
+    ],
+    "fault": "timeout_after_commit",
+    "error": "WRITE_OUTCOME_UNKNOWN",
+    "cart": {
+      "a4000000-0000-0000-0000-000000000001": 1
+    },
+    "write_count": 1,
+    "uncertain": true,
+    "category": "safety"
+  }
+]

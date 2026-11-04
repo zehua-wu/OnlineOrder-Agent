@@ -26,9 +26,17 @@ class BackendToolError(AgentError):
         message: str,
         status_code: int | None = None,
         retryable: bool = False,
+        outcome_unknown: bool = False,
     ) -> None:
         super().__init__(message)
         self.code = code
         self.message = message
         self.status_code = status_code
         self.retryable = retryable
+        self.outcome_unknown = outcome_unknown
+
+
+class HarnessConflictError(AgentError):
+    def __init__(self, code: str, message: str) -> None:
+        super().__init__(message)
+        self.code = code

@@ -1,0 +1,785 @@
+[
+  {
+    "user_message": "找15美元以内不太辣的鸡肉",
+    "session": {
+      "schema_version": 2,
+      "session_id": "d6b76614-60ec-476b-ba0f-0d29880655a2",
+      "revision": 1,
+      "turn_count": 1,
+      "user_id": "11111111-1111-1111-1111-111111111111",
+      "owner_fingerprint": null,
+      "messages": [
+        {
+          "role": "user",
+          "content": "找15美元以内不太辣的鸡肉"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        }
+      ],
+      "state": {
+        "current_task": "MENU_SEARCH",
+        "search": {
+          "keyword": null,
+          "cuisine_type": null,
+          "category": null,
+          "primary_protein": "CHICKEN",
+          "max_spicy_level": 1,
+          "max_sweetness_level": null,
+          "vegetarian": null,
+          "caffeinated": null,
+          "serving_temperature": null,
+          "min_price": null,
+          "max_price": 15.0,
+          "limit": 10
+        },
+        "last_search_results": [
+          {
+            "position": 1,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000001",
+            "name": "Avocado Chicken Bowl",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado rice",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 12.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 10,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 1,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          },
+          {
+            "position": 2,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+            "name": "Avocado Chicken Wrap",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado tortilla",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 14.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 5,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 0,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          }
+        ],
+        "selected_item": null,
+        "phase": "CHAT",
+        "pending_action": null,
+        "cart": null,
+        "last_restaurants": [],
+        "results_updated_at": "2026-11-04T17:48:43.288072Z"
+      },
+      "summary": null,
+      "created_at": "2026-11-04T17:48:43.285284Z",
+      "updated_at": "2026-11-04T17:48:43.288214Z"
+    },
+    "backend_cart": {
+      "id": null,
+      "userId": "11111111-1111-1111-1111-111111111111",
+      "status": "ACTIVE",
+      "items": [],
+      "totalAmount": 0
+    },
+    "write_count": 0
+  },
+  {
+    "user_message": "最好有avocado",
+    "session": {
+      "schema_version": 2,
+      "session_id": "d6b76614-60ec-476b-ba0f-0d29880655a2",
+      "revision": 2,
+      "turn_count": 2,
+      "user_id": "11111111-1111-1111-1111-111111111111",
+      "owner_fingerprint": null,
+      "messages": [
+        {
+          "role": "user",
+          "content": "找15美元以内不太辣的鸡肉"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "最好有avocado"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        }
+      ],
+      "state": {
+        "current_task": "MENU_SEARCH",
+        "search": {
+          "keyword": "avocado",
+          "cuisine_type": null,
+          "category": null,
+          "primary_protein": "CHICKEN",
+          "max_spicy_level": 1,
+          "max_sweetness_level": null,
+          "vegetarian": null,
+          "caffeinated": null,
+          "serving_temperature": null,
+          "min_price": null,
+          "max_price": 15.0,
+          "limit": 10
+        },
+        "last_search_results": [
+          {
+            "position": 1,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000001",
+            "name": "Avocado Chicken Bowl",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado rice",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 12.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 10,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 1,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          },
+          {
+            "position": 2,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+            "name": "Avocado Chicken Wrap",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado tortilla",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 14.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 5,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 0,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          }
+        ],
+        "selected_item": null,
+        "phase": "CHAT",
+        "pending_action": null,
+        "cart": null,
+        "last_restaurants": [],
+        "results_updated_at": "2026-11-04T17:48:43.289656Z"
+      },
+      "summary": null,
+      "created_at": "2026-11-04T17:48:43.285284Z",
+      "updated_at": "2026-11-04T17:48:43.289740Z"
+    },
+    "backend_cart": {
+      "id": null,
+      "userId": "11111111-1111-1111-1111-111111111111",
+      "status": "ACTIVE",
+      "items": [],
+      "totalAmount": 0
+    },
+    "write_count": 0
+  },
+  {
+    "user_message": "第二个不错",
+    "session": {
+      "schema_version": 2,
+      "session_id": "d6b76614-60ec-476b-ba0f-0d29880655a2",
+      "revision": 3,
+      "turn_count": 3,
+      "user_id": "11111111-1111-1111-1111-111111111111",
+      "owner_fingerprint": null,
+      "messages": [
+        {
+          "role": "user",
+          "content": "找15美元以内不太辣的鸡肉"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "最好有avocado"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "第二个不错"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        }
+      ],
+      "state": {
+        "current_task": "MENU_SEARCH",
+        "search": {
+          "keyword": "avocado",
+          "cuisine_type": null,
+          "category": null,
+          "primary_protein": "CHICKEN",
+          "max_spicy_level": 1,
+          "max_sweetness_level": null,
+          "vegetarian": null,
+          "caffeinated": null,
+          "serving_temperature": null,
+          "min_price": null,
+          "max_price": 15.0,
+          "limit": 10
+        },
+        "last_search_results": [
+          {
+            "position": 1,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000001",
+            "name": "Avocado Chicken Bowl",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado rice",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 12.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 10,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 1,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          },
+          {
+            "position": 2,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+            "name": "Avocado Chicken Wrap",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado tortilla",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 14.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 5,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 0,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          }
+        ],
+        "selected_item": {
+          "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+          "name": "Avocado Chicken Wrap",
+          "restaurant_name": "Fixture Kitchen",
+          "price": 14.0
+        },
+        "phase": "CHAT",
+        "pending_action": null,
+        "cart": null,
+        "last_restaurants": [],
+        "results_updated_at": "2026-11-04T17:48:43.289656Z"
+      },
+      "summary": null,
+      "created_at": "2026-11-04T17:48:43.285284Z",
+      "updated_at": "2026-11-04T17:48:43.290290Z"
+    },
+    "backend_cart": {
+      "id": null,
+      "userId": "11111111-1111-1111-1111-111111111111",
+      "status": "ACTIVE",
+      "items": [],
+      "totalAmount": 0
+    },
+    "write_count": 0
+  },
+  {
+    "user_message": "把第二个加入两份",
+    "session": {
+      "schema_version": 2,
+      "session_id": "d6b76614-60ec-476b-ba0f-0d29880655a2",
+      "revision": 4,
+      "turn_count": 4,
+      "user_id": "11111111-1111-1111-1111-111111111111",
+      "owner_fingerprint": null,
+      "messages": [
+        {
+          "role": "user",
+          "content": "找15美元以内不太辣的鸡肉"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "最好有avocado"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "第二个不错"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "把第二个加入两份"
+        },
+        {
+          "role": "assistant",
+          "content": "准备将 Avocado Chicken Wrap × 2 加入购物车。请回复“确认”或“取消”（5 分钟内有效）。"
+        }
+      ],
+      "state": {
+        "current_task": "MENU_SEARCH",
+        "search": {
+          "keyword": "avocado",
+          "cuisine_type": null,
+          "category": null,
+          "primary_protein": "CHICKEN",
+          "max_spicy_level": 1,
+          "max_sweetness_level": null,
+          "vegetarian": null,
+          "caffeinated": null,
+          "serving_temperature": null,
+          "min_price": null,
+          "max_price": 15.0,
+          "limit": 10
+        },
+        "last_search_results": [
+          {
+            "position": 1,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000001",
+            "name": "Avocado Chicken Bowl",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado rice",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 12.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 10,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 1,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          },
+          {
+            "position": 2,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+            "name": "Avocado Chicken Wrap",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado tortilla",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 14.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 5,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 0,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          }
+        ],
+        "selected_item": {
+          "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+          "name": "Avocado Chicken Wrap",
+          "restaurant_name": "Fixture Kitchen",
+          "price": 14.0
+        },
+        "phase": "AWAITING_CONFIRMATION",
+        "pending_action": {
+          "action_id": "7d51a8f4-4cae-4190-9068-33a839342898",
+          "kind": "ADD_TO_CART",
+          "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+          "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+          "name": "Avocado Chicken Wrap",
+          "quantity": 2,
+          "created_at": "2026-11-04T17:48:43.290816Z",
+          "expires_at": "2026-11-04T17:53:43.290734Z"
+        },
+        "cart": null,
+        "last_restaurants": [],
+        "results_updated_at": "2026-11-04T17:48:43.289656Z"
+      },
+      "summary": null,
+      "created_at": "2026-11-04T17:48:43.285284Z",
+      "updated_at": "2026-11-04T17:48:43.290923Z"
+    },
+    "backend_cart": {
+      "id": null,
+      "userId": "11111111-1111-1111-1111-111111111111",
+      "status": "ACTIVE",
+      "items": [],
+      "totalAmount": 0
+    },
+    "write_count": 0
+  },
+  {
+    "user_message": "确认",
+    "session": {
+      "schema_version": 2,
+      "session_id": "d6b76614-60ec-476b-ba0f-0d29880655a2",
+      "revision": 5,
+      "turn_count": 5,
+      "user_id": "11111111-1111-1111-1111-111111111111",
+      "owner_fingerprint": null,
+      "messages": [
+        {
+          "role": "user",
+          "content": "找15美元以内不太辣的鸡肉"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "最好有avocado"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "第二个不错"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "把第二个加入两份"
+        },
+        {
+          "role": "assistant",
+          "content": "准备将 Avocado Chicken Wrap × 2 加入购物车。请回复“确认”或“取消”（5 分钟内有效）。"
+        },
+        {
+          "role": "user",
+          "content": "确认"
+        },
+        {
+          "role": "assistant",
+          "content": "已将 Avocado Chicken Wrap × 2 加入购物车。"
+        }
+      ],
+      "state": {
+        "current_task": "MENU_SEARCH",
+        "search": {
+          "keyword": "avocado",
+          "cuisine_type": null,
+          "category": null,
+          "primary_protein": "CHICKEN",
+          "max_spicy_level": 1,
+          "max_sweetness_level": null,
+          "vegetarian": null,
+          "caffeinated": null,
+          "serving_temperature": null,
+          "min_price": null,
+          "max_price": 15.0,
+          "limit": 10
+        },
+        "last_search_results": [
+          {
+            "position": 1,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000001",
+            "name": "Avocado Chicken Bowl",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado rice",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 12.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 10,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 1,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          },
+          {
+            "position": 2,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+            "name": "Avocado Chicken Wrap",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado tortilla",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 14.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 5,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 0,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          }
+        ],
+        "selected_item": {
+          "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+          "name": "Avocado Chicken Wrap",
+          "restaurant_name": "Fixture Kitchen",
+          "price": 14.0
+        },
+        "phase": "CHAT",
+        "pending_action": null,
+        "cart": {
+          "id": "a5000000-0000-0000-0000-000000000001",
+          "userId": "11111111-1111-1111-1111-111111111111",
+          "status": "ACTIVE",
+          "items": [
+            {
+              "id": "a4000000-0000-0000-0000-000000000002",
+              "menuItemId": "a4000000-0000-0000-0000-000000000002",
+              "name": "Avocado Chicken Wrap",
+              "price": 14.0,
+              "imageUrl": null,
+              "quantity": 2,
+              "subtotal": 28.0
+            }
+          ],
+          "totalAmount": 28.0
+        },
+        "last_restaurants": [],
+        "results_updated_at": "2026-11-04T17:48:43.289656Z"
+      },
+      "summary": null,
+      "created_at": "2026-11-04T17:48:43.285284Z",
+      "updated_at": "2026-11-04T17:48:43.291979Z"
+    },
+    "backend_cart": {
+      "id": "a5000000-0000-0000-0000-000000000001",
+      "userId": "11111111-1111-1111-1111-111111111111",
+      "status": "ACTIVE",
+      "items": [
+        {
+          "id": "a4000000-0000-0000-0000-000000000002",
+          "menuItemId": "a4000000-0000-0000-0000-000000000002",
+          "name": "Avocado Chicken Wrap",
+          "price": 14.0,
+          "imageUrl": null,
+          "quantity": 2,
+          "subtotal": 28.0
+        }
+      ],
+      "totalAmount": 28.0
+    },
+    "write_count": 1
+  },
+  {
+    "user_message": "查看购物车",
+    "session": {
+      "schema_version": 2,
+      "session_id": "d6b76614-60ec-476b-ba0f-0d29880655a2",
+      "revision": 6,
+      "turn_count": 6,
+      "user_id": "11111111-1111-1111-1111-111111111111",
+      "owner_fingerprint": null,
+      "messages": [
+        {
+          "role": "user",
+          "content": "找15美元以内不太辣的鸡肉"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "最好有avocado"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "第二个不错"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        },
+        {
+          "role": "user",
+          "content": "把第二个加入两份"
+        },
+        {
+          "role": "assistant",
+          "content": "准备将 Avocado Chicken Wrap × 2 加入购物车。请回复“确认”或“取消”（5 分钟内有效）。"
+        },
+        {
+          "role": "user",
+          "content": "确认"
+        },
+        {
+          "role": "assistant",
+          "content": "已将 Avocado Chicken Wrap × 2 加入购物车。"
+        },
+        {
+          "role": "user",
+          "content": "查看购物车"
+        },
+        {
+          "role": "assistant",
+          "content": "已查询到工具返回的数据。"
+        }
+      ],
+      "state": {
+        "current_task": "CART",
+        "search": {
+          "keyword": "avocado",
+          "cuisine_type": null,
+          "category": null,
+          "primary_protein": "CHICKEN",
+          "max_spicy_level": 1,
+          "max_sweetness_level": null,
+          "vegetarian": null,
+          "caffeinated": null,
+          "serving_temperature": null,
+          "min_price": null,
+          "max_price": 15.0,
+          "limit": 10
+        },
+        "last_search_results": [
+          {
+            "position": 1,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000001",
+            "name": "Avocado Chicken Bowl",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado rice",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 12.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 10,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 1,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          },
+          {
+            "position": 2,
+            "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+            "name": "Avocado Chicken Wrap",
+            "description": "Synthetic offline fixture",
+            "ingredient_summary": "chicken avocado tortilla",
+            "restaurant_name": "Fixture Kitchen",
+            "restaurant_id": "a3000000-0000-0000-0000-000000000001",
+            "price": 14.0,
+            "image_url": null,
+            "category": "MAIN",
+            "cuisine_type": "AMERICAN",
+            "available_quantity": 5,
+            "primary_protein": "CHICKEN",
+            "spicy_level": 0,
+            "sweetness_level": 0,
+            "vegetarian": false,
+            "caffeinated": false,
+            "serving_temperature": "HOT"
+          }
+        ],
+        "selected_item": {
+          "menu_item_id": "a4000000-0000-0000-0000-000000000002",
+          "name": "Avocado Chicken Wrap",
+          "restaurant_name": "Fixture Kitchen",
+          "price": 14.0
+        },
+        "phase": "CHAT",
+        "pending_action": null,
+        "cart": {
+          "id": "a5000000-0000-0000-0000-000000000001",
+          "userId": "11111111-1111-1111-1111-111111111111",
+          "status": "ACTIVE",
+          "items": [
+            {
+              "id": "a4000000-0000-0000-0000-000000000002",
+              "menuItemId": "a4000000-0000-0000-0000-000000000002",
+              "name": "Avocado Chicken Wrap",
+              "price": 14.0,
+              "imageUrl": null,
+              "quantity": 2,
+              "subtotal": 28.0
+            }
+          ],
+          "totalAmount": 28.0
+        },
+        "last_restaurants": [],
+        "results_updated_at": "2026-11-04T17:48:43.289656Z"
+      },
+      "summary": null,
+      "created_at": "2026-11-04T17:48:43.285284Z",
+      "updated_at": "2026-11-04T17:48:43.292867Z"
+    },
+    "backend_cart": {
+      "id": "a5000000-0000-0000-0000-000000000001",
+      "userId": "11111111-1111-1111-1111-111111111111",
+      "status": "ACTIVE",
+      "items": [
+        {
+          "id": "a4000000-0000-0000-0000-000000000002",
+          "menuItemId": "a4000000-0000-0000-0000-000000000002",
+          "name": "Avocado Chicken Wrap",
+          "price": 14.0,
+          "imageUrl": null,
+          "quantity": 2,
+          "subtotal": 28.0
+        }
+      ],
+      "totalAmount": 28.0
+    },
+    "write_count": 1
+  }
+]

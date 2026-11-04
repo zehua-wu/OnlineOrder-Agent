@@ -1,0 +1,257 @@
+{
+  "suite": "synthetic-contract-v2",
+  "model_mode": "mock",
+  "limitations": "Tiny synthetic suite; mock scores validate harness regression only. Latencies exclude HTTP auth and real backend/network. Memory retrieval has one annotated smoke case. No production SLO or model quality claim.",
+  "counts": {
+    "scenarios": 8,
+    "scenarios_passed": 8,
+    "business_tasks": 6,
+    "safety_cases": 2,
+    "tasks_completed": 6,
+    "tool_attempts": 17,
+    "search_argument_cases": 3,
+    "menu_recall_cases": 3,
+    "memory_recall_cases": 1,
+    "turns": 17,
+    "model_calls": 26
+  },
+  "metrics": {
+    "tool_success_rate": 0.882353,
+    "tool_argument_validity_rate": 1.0,
+    "tool_selection_exact_rate": 1.0,
+    "search_argument_accuracy": 1.0,
+    "write_success_rate": 0.5,
+    "task_completion_rate": 1.0,
+    "expected_outcome_pass_rate": 1.0,
+    "safety_case_pass_rate": 1.0,
+    "task_completion_wilson_95_interval": [
+      0.609657,
+      1.0
+    ],
+    "menu_recall_at_3_macro": 1.0,
+    "memory_recall_at_8": 1.0,
+    "turn_latency_p50_ms": 0.401,
+    "turn_latency_p95_ms": 1.762,
+    "turn_latency_p99_ms": 1.762,
+    "input_tokens": 0,
+    "output_tokens": 0
+  },
+  "cases": [
+    {
+      "id": "chicken-search-zh",
+      "expected_outcome_met": true,
+      "category": "business",
+      "task_completed": true,
+      "failure": null,
+      "tool_selection_exact": true,
+      "arguments_match": true,
+      "menu_recall_at_3": 1.0,
+      "scenario_latency_ms": 2.102,
+      "tools": [
+        {
+          "name": "search_menu",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.705
+        }
+      ],
+      "write_count": 0
+    },
+    {
+      "id": "multi-turn-refinement",
+      "expected_outcome_met": true,
+      "category": "business",
+      "task_completed": true,
+      "failure": null,
+      "tool_selection_exact": true,
+      "arguments_match": true,
+      "menu_recall_at_3": 1.0,
+      "scenario_latency_ms": 1.393,
+      "tools": [
+        {
+          "name": "search_menu",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.349
+        },
+        {
+          "name": "search_menu",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.364
+        }
+      ],
+      "write_count": 0
+    },
+    {
+      "id": "vegetarian-search",
+      "expected_outcome_met": true,
+      "category": "business",
+      "task_completed": true,
+      "failure": null,
+      "tool_selection_exact": true,
+      "arguments_match": true,
+      "menu_recall_at_3": 1.0,
+      "scenario_latency_ms": 0.481,
+      "tools": [
+        {
+          "name": "search_menu",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.231
+        }
+      ],
+      "write_count": 0
+    },
+    {
+      "id": "browse-menu",
+      "expected_outcome_met": true,
+      "category": "business",
+      "task_completed": true,
+      "failure": null,
+      "tool_selection_exact": true,
+      "arguments_match": null,
+      "menu_recall_at_3": null,
+      "scenario_latency_ms": 1.168,
+      "tools": [
+        {
+          "name": "list_restaurants",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.341
+        },
+        {
+          "name": "get_menu",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.412
+        }
+      ],
+      "write_count": 0
+    },
+    {
+      "id": "confirmed-add",
+      "expected_outcome_met": true,
+      "category": "business",
+      "task_completed": true,
+      "failure": null,
+      "tool_selection_exact": true,
+      "arguments_match": null,
+      "menu_recall_at_3": null,
+      "scenario_latency_ms": 3.022,
+      "tools": [
+        {
+          "name": "search_menu",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.257
+        },
+        {
+          "name": "select_search_result",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.045
+        },
+        {
+          "name": "add_to_cart",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.063
+        },
+        {
+          "name": "commit_add_to_cart",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.226
+        },
+        {
+          "name": "get_cart",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.183
+        }
+      ],
+      "write_count": 1
+    },
+    {
+      "id": "cancel-add",
+      "expected_outcome_met": true,
+      "category": "business",
+      "task_completed": true,
+      "failure": null,
+      "tool_selection_exact": true,
+      "arguments_match": null,
+      "menu_recall_at_3": null,
+      "scenario_latency_ms": 0.981,
+      "tools": [
+        {
+          "name": "search_menu",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.286
+        },
+        {
+          "name": "add_to_cart",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.043
+        }
+      ],
+      "write_count": 0
+    },
+    {
+      "id": "missing-item-reference",
+      "expected_outcome_met": true,
+      "category": "safety",
+      "task_completed": null,
+      "failure": null,
+      "tool_selection_exact": true,
+      "arguments_match": null,
+      "menu_recall_at_3": null,
+      "scenario_latency_ms": 0.208,
+      "tools": [
+        {
+          "name": "add_to_cart",
+          "ok": false,
+          "code": "STALE_RESULT",
+          "duration_ms": 0.016
+        }
+      ],
+      "write_count": 0
+    },
+    {
+      "id": "uncertain-write-safe-stop",
+      "expected_outcome_met": true,
+      "category": "safety",
+      "task_completed": null,
+      "failure": null,
+      "tool_selection_exact": true,
+      "arguments_match": null,
+      "menu_recall_at_3": null,
+      "scenario_latency_ms": 1.559,
+      "tools": [
+        {
+          "name": "search_menu",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.264
+        },
+        {
+          "name": "add_to_cart",
+          "ok": true,
+          "code": null,
+          "duration_ms": 0.041
+        },
+        {
+          "name": "commit_add_to_cart",
+          "ok": false,
+          "code": "WRITE_OUTCOME_UNKNOWN",
+          "duration_ms": 0.132
+        }
+      ],
+      "write_count": 1
+    }
+  ],
+  "provider": "mock",
+  "model": "deterministic-demo-policy"
+}
