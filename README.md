@@ -14,6 +14,10 @@
 - Qwen / DeepSeek / OpenAI 的 Chat Completions 适配；环境变量切换。
 - 不需要真实密钥的完整演示、自动化测试和离线评测；可用真实 LLM 对同一 Mock 后端评测。
 
+## 第一次学习Agent，先读这里
+
+[从零理解这版Agent：整体思路、逐步调用、Session、记忆、工具与加购恢复](doc/agent-v2-from-zero-zh.md)。这份教程从具体点单问题讲到实际代码，不要求先熟悉Agent框架。
+
 ## 十分钟开始
 
 ```bash
